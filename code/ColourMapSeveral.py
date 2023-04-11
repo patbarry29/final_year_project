@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.interpolate import griddata
 import matplotlib.colors
+from scipy.interpolate import griddata
 
 from bisect_obstacles import bisectObstacles
 from circle_path_v1 import circleAlgV1

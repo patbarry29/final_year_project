@@ -1,4 +1,3 @@
-from osgeo import gdal
 from MapCoordinates import *
 import sys
 
