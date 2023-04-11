@@ -1,0 +1,14 @@
+function getWaypoints(σ)
+    Clear SafePath, Clear Q
+    Add the first point in σ to SafePath 
+    for each pair (o,d) in the σ do
+        o⋆ ← o
+        while there are threats overlapping with a line between o⋆ and d do
+            Among all threats overlapping with the line, find threat t with the shortest distance to the line
+            Generate waypoint wp on the boundary of threat t, which leads the minimum distance increase in SafePath
+            Add wp to SafePath
+            o⋆ ← wp 
+        end while
+        Add d to SafePath 
+    end for
+    return SafePath

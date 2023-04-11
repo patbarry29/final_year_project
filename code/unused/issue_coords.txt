@@ -1,0 +1,4 @@
+
+The end coordinate is above the max altitude of 200m, which caused a problem for the find_peaks but resolved issue.
+start = (54.287847, -7.069077)
+end = (54.266147, -7.312347)
