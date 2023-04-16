@@ -57,6 +57,7 @@ def a_star(graph, fly_alt, start, end):
     path = {start:None}
     costs = {start:0}
     max_alt = Altitude(start).getAltitude() + 120
+    # max_alt = graph.getMaxAlt()
     max_alt_diff = max_alt-fly_alt # constant value of 40 in my tests
 
     while agenda.qsize() > 0:

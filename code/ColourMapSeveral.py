@@ -87,11 +87,14 @@ except:
     start = (52.375697, -6.476178)
     end = (52.458768, -6.823477)
 
+# start = (52.552282, -9.091245)
+# end = (52.382904, -8.815093)
 # start = (52.15479648262347, -10.269537344917408) # dingle to tralee
 # end = (52.29349252772312, -9.708420947018718)
 
 print("start =", start)
 print("end =", end)
+print()
 
 
 straight_line = Line(start, end)
@@ -168,6 +171,15 @@ else:
 # # ---------------Method 6 - Bisect--------------- #
 
 
+algs = ['Circles', 'Circles w/ Waypts', 'Follow Edge', 'Greedy', 'A*']
+
+print(algs[0], pathv1.getMaxAlt(), sep=':\t\t')
+print(algs[1], pathv2.getMaxAlt(), sep=':\t')
+print(algs[2], pathv3.getMaxAlt(), sep=':\t\t')
+print(algs[3], pathv4.getMaxAlt(), sep=':\t\t\t')
+print(algs[4], pathv5.getMaxAlt(), sep=':\t\t\t')
+# print(pathv6.getMaxAlt())
+
 graph1 = graph.getMap()
 
 # create dataset where each element is [lat,lon,alt]
@@ -201,8 +213,6 @@ z_max = np.nanmax(z)
 z[z<=0.] = z_max*-0.28302 # make all underwater points the same value
 z[z>max_alt] = z_max  # make all points that are obstacles the same value
 
-algs = ['Circles', 'Circles w/ Waypts', 'Follow Edge', 'Greedy', 'A*']
-
 fig1, ax = makeFigure(pathv1, 'red', 0)
 
 fig2, ax = makeFigure(pathv2, 'black',1)
@@ -217,12 +227,6 @@ fig5, ax = makeFigure(pathv5, 'purple',4)
 
 print()
 
-print(algs[0], pathv1.getMaxAlt(), sep=':\t\t')
-print(algs[1], pathv2.getMaxAlt(), sep=':\t')
-print(algs[2], pathv3.getMaxAlt(), sep=':\t\t')
-print(algs[3], pathv4.getMaxAlt(), sep=':\t\t\t')
-print(algs[4], pathv5.getMaxAlt(), sep=':\t\t\t')
-# print(pathv6.getMaxAlt())
 
 
 plt.show()

@@ -138,8 +138,8 @@ class Line:
                 # range of factor = (1,50)
                 # range of ang = (1,180)
                 factor += ((ang**0.75)/100)
-                if ang < 2:
-                    factor += 0.3
+                # if ang < 2:
+                #     factor += 0.3
             e_mj *= factor
             e_kwh *= factor
             e_mah *= factor
@@ -150,8 +150,9 @@ class Line:
             factor = 1
             if pt2_alt > fly_alt:
                 if pt2_alt > pt1_alt:
-                    asc += pt2_alt-pt1_alt
-                    factor += 0.3 # 30% more power for ascent
+                    m_asc = pt2_alt-pt1_alt
+                    asc += m_asc
+                    factor += (0.3*m_asc) # 30% more power for ascent
                 elif pt2_alt < pt1_alt:
                     desc += pt1_alt-pt2_alt
                     factor += 0.15 # 15% more for descent
@@ -171,7 +172,7 @@ class Line:
         if num_of_turns > 0:
             avg_ang = round(total_ang/num_of_turns, 1)
         
-        return (round(energy_MJ, 1), 
+        return (energy_MJ, 
                 round(energy_kWh, 1), 
                 round(energy_mAh, 1), 
                 num_of_turns, 

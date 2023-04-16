@@ -28,6 +28,9 @@ class AreaMap:
     def getWidth(self):
         return len(self._matrix[0])
     
+    def getMaxAlt(self):
+        return self._line.getMaxAlt()
+    
     def getMaxAltDrone(self):
         return self._max_alt
     

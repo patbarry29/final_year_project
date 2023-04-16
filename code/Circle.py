@@ -25,7 +25,6 @@ class Circle:
             # store in dict
             half1[pt1] = Altitude(pt1).getAltitude()
             half2[pt2] = Altitude(pt2).getAltitude()
-
             angle += inc
         
         return half1, half2
