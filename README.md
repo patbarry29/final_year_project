@@ -10,4 +10,5 @@ The following packages are also required, but most likely already installed:
  - numpy, [guide](https://numpy.org/install/)
 
 To compare all algorithms using numerical results, run compare_all_algs.py.
-To compare the flight paths plotted on a terrain map, run ColourMapSeveral.py
+To compare the flight paths plotted on a terrain map, run ColourMapSeveral.py.  
+All terrain files are contained within the ireland folder, while all Python files are stored in the code folder.
