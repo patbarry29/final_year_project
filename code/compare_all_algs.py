@@ -170,7 +170,7 @@ def runRandom():
     print("Metres spent ascending", energies[0][4], energies[1][4], energies[2][4], energies[3][4], energies[4][4], energies[5][4], sep='\t\t')
     print("Metres spent descending", energies[0][5], energies[1][5], energies[2][5], energies[3][5], energies[4][5], energies[5][5], sep='\t\t')
     print()
-    print("Energy used (mAh)", energies[0][2], energies[1][2], energies[2][2], energies[3][2], energies[4][2], energies[5][0], sep='\t\t')
+    print("Energy used (mAh)", energies[0][2], energies[1][2], energies[2][2], energies[3][2], energies[4][2], energies[5][2], sep='\t\t')
 
 
 def writeFile(dist, ratios, energies, exec_times):
