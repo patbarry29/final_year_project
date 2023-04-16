@@ -22,11 +22,7 @@ def runRandom():
         print('fail')
         start = (52.552282, -9.091245)
         end = (52.382904, -8.815093)
-    start = (52.552282, -9.091245)
-    end = (52.382904, -8.815093)
-    # start = (52.15479648262347, -10.269537344917408) # dingle to tralee
-    # end = (52.29349252772312, -9.708420947018718)
-
+    
     straight_line = Line(start, end)
     start_alt = Altitude(start).getAltitude()
 
