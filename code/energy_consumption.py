@@ -8,7 +8,7 @@ Functions to use in evaluating energy usage
 
 def getEnergy(pt1, pt2):
     '''
-    Return energy between 2 points in 3 different metrics
+    Return energy between 2 points in 3 different units
         Mega Joules
         Kilowatt-hours
         Milliamp-hours

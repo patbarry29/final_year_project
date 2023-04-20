@@ -48,13 +48,12 @@ def runRandom():
     # ---------------Method 1 - Circle Algorithm--------------- #
     inc = 1
     st1 = time.time()
-    # try:
-    pathv1 = circleAlgV1(peaks, straight_line.getLine(), inc, max_alt)
-    print("Solution found for V1")
-    # except:
-    #     pathv1 = Line(start, end)
-    #     pathv1.addLine(Line(start, end))
-    #     print("No solution found for V1")
+    try:
+        pathv1 = circleAlgV1(peaks, straight_line.getLine(), inc, max_alt)
+        print("Solution found for V1")
+    except:
+        pathv1 = Line(start, end)
+        print("No solution found for V1")
     et1 = time.time()
     ex_time1 = round(et1-st1,2)
     maxv1 = pathv1.getMaxAlt()
@@ -68,7 +67,6 @@ def runRandom():
         print("Solution found for V2")
     except:
         pathv2 = Line(start, end)
-        pathv2.addLine(Line(start, end))
         print("No solution found for V2")
     et2 = time.time()
     ex_time2 = round(et2-st2, 2)
@@ -84,7 +82,6 @@ def runRandom():
         print("Solution found for V3")
     except:
         pathv3 = Line(start, end)
-        pathv3.addLine(Line(start, end))
         print("No solution found for V3")
     et3 = time.time()
     ex_time3 = round(et3-st3, 2)
@@ -104,7 +101,6 @@ def runRandom():
         print("Solution found for V4")
     except:
         pathv4 = Line(start, end)
-        pathv4.addLine(Line(start, end))
         print("No solution found for V4")
     et4 = time.time()
     ex_time4 = round(et4-st4, 2)
@@ -121,7 +117,6 @@ def runRandom():
         print("Solution found for V5")
     else:
         pathv5 = Line(start, end)
-        pathv5.addLine(Line(start, end))
         print("No solution found for V5")
     et5 = time.time()
     ex_time5 = round(et5-st5, 2)
@@ -155,9 +150,16 @@ def runRandom():
         energies.append(path.getEnergyConsumption(fly_alt))
 
     exec_times = [0, ex_time1, ex_time2, ex_time3, ex_time4, ex_time5]
+    
+    speed = 80 # km/h
+    time_taken = []
+    for dist in dists:
+        t = dist/speed
+        t = t*60
+        time_taken.append(round(t, 2))
 
     # ---------------WRITE RESULTS TO FILE--------------- #
-    # writeFile(dist_flown, ratios, energies, exec_times)
+    writeFile(dist_flown, ratios, energies, exec_times, time_taken)
 
     # ---------------PRINT RESULTS--------------- #
     print("\t\t\t", "Straight", "Circles\t", "Circles Waypts", "Follow Edge", "Greedy", "\tA*", sep='\t')
@@ -165,6 +167,7 @@ def runRandom():
     print()
     print("Distance flown (km)", dists[0], dists[1], dists[2], dists[3], dists[4], dists[5], sep='\t\t')
     print("Extra dist flown ratio", ratios[0], ratios[1], ratios[2], ratios[3], ratios[4], ratios[5], sep='\t\t')
+    print("Time taken (mins)", time_taken[0], time_taken[1], time_taken[2], time_taken[3], time_taken[4], time_taken[5], sep='\t\t')
     print()
     print("Number of turns\t", energies[0][3], energies[1][3], energies[2][3], energies[3][3], energies[4][3], energies[5][3], sep='\t\t')
     print("Avg angle of turn (°)", energies[0][6], energies[1][6], energies[2][6], energies[3][6], energies[4][6], energies[5][6], sep='\t\t')
@@ -178,7 +181,7 @@ def runRandom():
     print("Energy used (mAh)", energies[0][2], energies[1][2], energies[2][2], energies[3][2], energies[4][2], energies[5][2], sep='\t\t')
 
 
-def writeFile(dist, ratios, energies, exec_times):
+def writeFile(dist, ratios, energies, exec_times, time_taken):
     '''
         Write values to file.
     '''
@@ -214,7 +217,9 @@ def writeFile(dist, ratios, energies, exec_times):
             line[6] += energies[i-2][4]
             line[7] += energies[i-2][5]
             line[8] += energies[i-2][2]
+            line[9] += time_taken[i-2]
             line[3] = round(line[3], 2)
+            line[8] = round(line[8], 2)
             line[8] = round(line[8], 2)
 
         file_matrix[i] = str(file_matrix[i]).replace('[', '')
@@ -233,7 +238,7 @@ def resetFile():
     '''
     f = open('comp_table.txt', 'r')
     file_matrix = []
-    i =0
+    i=0
     for line in f:
         line = line.strip().split(', ')
         file_matrix.append(line)
@@ -298,10 +303,10 @@ def avgFile():
     f.write(output)
 
 
-runRandom()
+# runRandom()
 
-# for i in range(10):
-#     runRandom()
+for i in range(10):
+    runRandom()
 
 # resetFile()
 # avgFile()

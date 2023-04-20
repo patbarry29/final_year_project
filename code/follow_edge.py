@@ -33,7 +33,7 @@ def followEdge(start, end, line, max_alt, step_dist):
     '''
         For each obstacle, finds a path around it that sticks to the edge.
     '''
-    obstacles = Obstacles(line.getLine(), max_alt).getObstacles()
+    obstacles = Obstacles(line, max_alt).getObstacles()
     x_slope,y_slope = getSlope(start, end, step_dist)
     checkpoints = [start]
     for obstacle in obstacles:
