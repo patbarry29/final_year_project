@@ -92,9 +92,8 @@ def circleAlgV1(peaks, line, inc, max_alt):
     start = list(line)[0]
     end = list(line)[-1]
     points = [start]
-    for centre, circle in circles:
-        for p in circle:
-            points.append(p)
+    for circle in circles:
+        points.append(circle)
     points.append(end)
 
     circle_path = Line(0,0)

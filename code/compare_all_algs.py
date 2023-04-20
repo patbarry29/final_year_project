@@ -48,12 +48,13 @@ def runRandom():
     # ---------------Method 1 - Circle Algorithm--------------- #
     inc = 1
     st1 = time.time()
-    try:
-        pathv1 = circleAlgV1(peaks, straight_line.getLine(), inc, max_alt)
-        print("Solution found for V1")
-    except:
-        pathv1 = Line(start, end)
-        print("No solution found for V1")
+    # try:
+    pathv1 = circleAlgV1(peaks, straight_line.getLine(), inc, max_alt)
+    print("Solution found for V1")
+    # except:
+    #     pathv1 = Line(start, end)
+    #     pathv1.addLine(Line(start, end))
+    #     print("No solution found for V1")
     et1 = time.time()
     ex_time1 = round(et1-st1,2)
     maxv1 = pathv1.getMaxAlt()
@@ -67,6 +68,7 @@ def runRandom():
         print("Solution found for V2")
     except:
         pathv2 = Line(start, end)
+        pathv2.addLine(Line(start, end))
         print("No solution found for V2")
     et2 = time.time()
     ex_time2 = round(et2-st2, 2)
@@ -82,6 +84,7 @@ def runRandom():
         print("Solution found for V3")
     except:
         pathv3 = Line(start, end)
+        pathv3.addLine(Line(start, end))
         print("No solution found for V3")
     et3 = time.time()
     ex_time3 = round(et3-st3, 2)
@@ -90,17 +93,18 @@ def runRandom():
 
 
     # ---------------Method 4 - Greedy--------------- #
+    step_dist = 50
+    width = 300
+    fly_alt = start_alt + 80
+    graph = AreaMap(start, end, width, max_alt, step_dist)
     st4 = time.time()
     try:
-        step_dist = 50
-        width = 300
-        fly_alt = start_alt + 80
-        graph = AreaMap(start, end, width, max_alt, step_dist)
         waypts = greedy(graph, start, end)
         pathv4 = cleanPath(waypts, fly_alt, start, end, True)
         print("Solution found for V4")
     except:
         pathv4 = Line(start, end)
+        pathv4.addLine(Line(start, end))
         print("No solution found for V4")
     et4 = time.time()
     ex_time4 = round(et4-st4, 2)
@@ -117,6 +121,7 @@ def runRandom():
         print("Solution found for V5")
     else:
         pathv5 = Line(start, end)
+        pathv5.addLine(Line(start, end))
         print("No solution found for V5")
     et5 = time.time()
     ex_time5 = round(et5-st5, 2)
