@@ -159,7 +159,7 @@ def runRandom():
         time_taken.append(round(t, 2))
 
     # ---------------WRITE RESULTS TO FILE--------------- #
-    writeFile(dist_flown, ratios, energies, exec_times, time_taken)
+    # writeFile(dist_flown, ratios, energies, exec_times, time_taken)
 
     # ---------------PRINT RESULTS--------------- #
     print("\t\t\t", "Straight", "Circles\t", "Circles Waypts", "Follow Edge", "Greedy", "\tA*", sep='\t')
@@ -303,10 +303,10 @@ def avgFile():
     f.write(output)
 
 
-# runRandom()
+runRandom()
 
-for i in range(10):
-    runRandom()
+# for i in range(10):
+#     runRandom()
 
 # resetFile()
 # avgFile()
