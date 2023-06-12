@@ -4,7 +4,7 @@ This is the code for my final year project. To run this code, the following pack
  - haversine - can be installed through pip, [guide](https://pypi.org/project/haversine/)
  - scipy - can be installed through pip, [guide](https://scipy.org/install/)
 
-The following packages are also required, but most likely already installed:
+The following packages are also required, but most likely already installed with default Python libraries:
  - matplotlib
  - pathlib
  - numpy, [guide](https://numpy.org/install/)
