@@ -109,7 +109,7 @@ def removeContainedPoints(pts_list):
     '''
     Due to circle radius getting bigger, it can often happen that one circle
     will reach around over another circle.
-    This fucntion checks each set of 3 points to see if one is contained within the 
+    This function checks each set of 3 points to see if one is contained within the 
     other. If yes, then remove the 3 points.
     '''
     start = pts_list[0]

@@ -15,11 +15,8 @@ def findPeaks(line, max_alt):
         if altitude >= max_alt and list(line).index(c) != len(line)-1:
             too_high[c] = altitude
         elif len(too_high) > 0:
-            peak_coords = max(too_high, key=too_high.get)
-            # all_coords = list(too_high.keys())
-            # d1 = math.dist(peak_coords, all_coords[-1])
-            # d2 = math.dist(peak_coords, all_coords[0])
-            # peaks[peak_coords] = max([d1, d2])
+            # peak_coords = max(too_high, key=too_high.get)
+            peak_coords = list(too_high)[int(len(too_high)/2)]
             peaks[peak_coords] = 0.0005
             too_high = {}
 

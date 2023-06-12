@@ -87,11 +87,6 @@ except:
     start = (52.375697, -6.476178)
     end = (52.458768, -6.823477)
 
-# start = (52.552282, -9.091245)
-# end = (52.382904, -8.815093)
-# start = (52.15479648262347, -10.269537344917408) # dingle to tralee
-# end = (52.29349252772312, -9.708420947018718)
-
 print("start =", start)
 print("end =", end)
 print()
@@ -211,17 +206,17 @@ z = np.matrix.flatten(z) # Gridded elevation
 z_max = np.nanmax(z)
 
 z[z<=0.] = z_max*-0.28302 # make all underwater points the same value
-z[z>max_alt] = z_max  # make all points that are obstacles the same value
+# z[z>max_alt] = z_max  # make all points that are obstacles the same value
 
-fig1, ax = makeFigure(pathv1, 'red', 0)
+fig1, ax = makeFigure(pathv1, 'red',0)
 
-fig2, ax = makeFigure(pathv2, 'black',1)
+fig2, ax = makeFigure(pathv2, 'red',1)
 
-fig3, ax = makeFigure(pathv3, 'green',2)
+fig3, ax = makeFigure(pathv3, 'red',2)
 
-fig4, ax = makeFigure(pathv4, 'blue',3)
+fig4, ax = makeFigure(pathv4, 'red',3)
 
-fig5, ax = makeFigure(pathv5, 'purple',4)
+fig5, ax = makeFigure(pathv5, 'red',4)
 
 # fig6, ax = makeFigure(pathv6, 'white')
 

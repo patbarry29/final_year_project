@@ -10,21 +10,45 @@ import time
 Compare all algorithms
 '''
 
-def runRandom():
+def pathSmoothing(path, fly_alt):
+    i=0
+    while i<path.getLength()-2:
+        pt1 = path.getPoint(i)
+        pt2 = path.getPoint(i+1)
+        pt3 = path.getPoint(i+2)
+        test_line = Line(pt1, pt3, 20)
+        if test_line.getMaxAlt() < fly_alt:
+            del path.getLine()[pt2]
+        else:
+            i += 1
+    
+    waypts = list(path.getLine().keys())
+    path = Line(0, 0)
+    for i in range(len(waypts)-1):
+        line = Line(waypts[i], waypts[i+1])
+        path.addLine(line)
+
+    return path
+
+def runRandom(start=(52.552282, -9.091245), end=(52.382904, -8.815093)):
     '''
         Runs each algorithm on a set of random start and end points
     '''
     # get 2 random points <= 'range' km away from each other
-    range_in_kms = 30
-    try:
-        start, end = getTwoPoints(range_in_kms)
-    except:
-        print('fail')
-        start = (52.552282, -9.091245)
-        end = (52.382904, -8.815093)
+    # range_in_kms = 30
+    # try:
+    #     start, end = getTwoPoints(range_in_kms)
+    # except:
+    #     print('fail')
+    #     start = (52.552282, -9.091245)
+    #     end = (52.382904, -8.815093)
+    # start = (52.552282, -9.091245)
+    # end = (52.382904, -8.815093)
     
     straight_line = Line(start, end)
     start_alt = Altitude(start).getAltitude()
+    
+    fly_alt = start_alt + 80
 
     # find all points above max altitude
     max_alt = start_alt+120
@@ -50,6 +74,7 @@ def runRandom():
     st1 = time.time()
     try:
         pathv1 = circleAlgV1(peaks, straight_line.getLine(), inc, max_alt)
+        pathv1 = pathSmoothing(pathv1, fly_alt)
         print("Solution found for V1")
     except:
         pathv1 = Line(start, end)
@@ -64,6 +89,7 @@ def runRandom():
     st2 = time.time()
     try:
         pathv2 = circleAlgV2(peaks, straight_line.getLine(), inc, max_alt)
+        pathv2 = pathSmoothing(pathv2, fly_alt)
         print("Solution found for V2")
     except:
         pathv2 = Line(start, end)
@@ -79,6 +105,7 @@ def runRandom():
     try:
         step_dist = 100
         pathv3 = runFollowEdge(start, end, start_alt, straight_line, step_dist)
+        pathv3 = pathSmoothing(pathv3, fly_alt)
         print("Solution found for V3")
     except:
         pathv3 = Line(start, end)
@@ -92,7 +119,6 @@ def runRandom():
     # ---------------Method 4 - Greedy--------------- #
     step_dist = 50
     width = 300
-    fly_alt = start_alt + 80
     graph = AreaMap(start, end, width, max_alt, step_dist)
     st4 = time.time()
     try:
@@ -150,6 +176,7 @@ def runRandom():
         energies.append(path.getEnergyConsumption(fly_alt))
 
     exec_times = [0, ex_time1, ex_time2, ex_time3, ex_time4, ex_time5]
+    maxs = [max_straight, maxv1, maxv2, maxv3, maxv4, maxv5]
     
     speed = 80 # km/h
     time_taken = []
@@ -162,23 +189,61 @@ def runRandom():
     # writeFile(dist_flown, ratios, energies, exec_times, time_taken)
 
     # ---------------PRINT RESULTS--------------- #
-    print("\t\t\t", "Straight", "Circles\t", "Circles Waypts", "Follow Edge", "Greedy", "\tA*", sep='\t')
-    print("Execution time (s)", 0, ex_time1, ex_time2, ex_time3, ex_time4, ex_time5, sep='\t\t')
+    print("\t\t\t", "Straight", "Circles\t", "Circles Waypts", "Follow Edge", "Greedy", "\tA*", "\tA*2", sep='\t')
+    print("Execution time (s)", end='\t\t')
+    for elem in exec_times:
+        print(elem, end='\t\t')
     print()
-    print("Distance flown (km)", dists[0], dists[1], dists[2], dists[3], dists[4], dists[5], sep='\t\t')
-    print("Extra dist flown ratio", ratios[0], ratios[1], ratios[2], ratios[3], ratios[4], ratios[5], sep='\t\t')
-    print("Time taken (mins)", time_taken[0], time_taken[1], time_taken[2], time_taken[3], time_taken[4], time_taken[5], sep='\t\t')
     print()
-    print("Number of turns\t", energies[0][3], energies[1][3], energies[2][3], energies[3][3], energies[4][3], energies[5][3], sep='\t\t')
-    print("Avg angle of turn (°)", energies[0][6], energies[1][6], energies[2][6], energies[3][6], energies[4][6], energies[5][6], sep='\t\t')
+    print("Distance flown (km)", end='\t\t')
+    for elem in dists:
+          print(elem, end='\t\t')
     print()
-    print("Max height (m)\t", max_straight, maxv1, maxv2, maxv3, maxv4, maxv5, sep='\t\t')
-    print("Average height (m)", avgs[0], avgs[1], avgs[2], avgs[3], avgs[4], avgs[5], sep='\t\t')
-    print("Max alt violation (m)", energies[0][7], energies[1][7], energies[2][7], energies[3][7], energies[4][7], energies[5][7], sep='\t\t')
-    print("Metres spent ascending", energies[0][4], energies[1][4], energies[2][4], energies[3][4], energies[4][4], energies[5][4], sep='\t\t')
-    print("Metres spent descending", energies[0][5], energies[1][5], energies[2][5], energies[3][5], energies[4][5], energies[5][5], sep='\t\t')
+    print("Extra dist flown ratio", end='\t\t')
+    for elem in ratios:
+          print(elem, end='\t\t')
     print()
-    print("Energy used (mAh)", energies[0][2], energies[1][2], energies[2][2], energies[3][2], energies[4][2], energies[5][2], sep='\t\t')
+    print("Time taken (mins)", end='\t\t')
+    for elem in time_taken:
+          print(elem, end='\t\t')
+    print()
+    print()
+    print("Number of turns\t", end='\t\t')
+    for elem in energies:
+          print(elem[3], end='\t\t')
+    print()
+    print("Avg angle of turn (°)", end='\t\t')
+    for elem in energies:
+          print(elem[6], end='\t\t')
+    print()
+    print()
+    print("Max height (m)\t", end='\t\t')
+    for elem in maxs:
+          print(elem, end='\t\t')
+    print()
+    print("Average height (m)", end='\t\t')
+    for elem in avgs:
+          print(elem, end='\t\t')
+    print()
+    print("Max alt violation (m)", end='\t\t')
+    for elem in energies:
+          print(elem[7], end='\t\t')
+    print()
+    print("Metres spent ascending", end='\t\t')
+    for elem in energies:
+          print(elem[4], end='\t\t')
+    print()
+    print("Metres spent descending", end='\t\t')
+    for elem in energies:
+          print(elem[5], end='\t\t')
+    print()
+    print()
+    print("Energy used (mAh)", end='\t\t')
+    for elem in energies:
+          print(elem[2], end='\t\t')
+    print()
+
+    return (start, end)
 
 
 def writeFile(dist, ratios, energies, exec_times, time_taken):
@@ -251,7 +316,7 @@ def resetFile():
             line[0] = 0
             line[1] = 0
         elif i>1:
-            for j in range(8):
+            for j in range(9):
                 line[j+1] = 0
 
         file_matrix[i] = str(file_matrix[i]).replace('[', '')
@@ -289,7 +354,7 @@ def avgFile():
     for i in range(len(file_matrix)):
         line = file_matrix[i]
         if i>1:
-            for j in range(8):
+            for j in range(9):
                 line[j+1] /= (int(file_matrix[0][0])*10)
                 line[j+1] = round(line[j+1], 2)
 
@@ -305,8 +370,10 @@ def avgFile():
 
 runRandom()
 
-# for i in range(10):
-#     runRandom()
+# points_list = [((54.927087, -6.530282), (54.855993, -6.425568)), ((52.911964, -9.023531), (53.170627, -8.943006)), ((51.989371, -9.403429), (51.896119, -9.461825)), ((54.40728, -7.096105), (54.559341, -6.911664)), ((54.404866, -6.972018), (54.538685, -7.170628)), ((51.73721, -8.827323), (51.908036, -8.603584)), ((53.897466, -9.405069), (53.886912, -8.998475)), ((54.928227, -7.816211), (55.038591, -7.892343)), ((51.950958, -9.715331), (52.161878, -9.526101)), ((53.553909, -9.26062), (53.446836, -9.640073)), ((54.060549, -6.464065), (54.246143, -6.690572)), ((52.741256, -8.033562), (52.537217, -8.011447)), ((52.697123, -6.3135), (52.844671, -6.515446)), ((54.951008, -6.802663), (54.884136, -7.13983)), ((52.317515, -8.577266), (52.274962, -8.294538)), ((53.940507, -7.010889), (53.96491, -7.446323)), ((52.486604, -9.231006), (52.337832, -8.935073)), ((54.182363, -5.937541), (54.440345, -5.95225)), ((54.949177, -6.839965), (54.869358, -6.692774)), ((52.199353, -9.403514), (52.393483, -9.176927)), ((51.816882, -9.529142), (52.000645, -9.334986)), ((54.98721, -8.189151), (55.007843, -8.134483)), ((55.002049, -7.282134), (54.947532, -7.561273)), ((54.528762, -7.052626), (54.711532, -7.306284)), ((52.875505, -7.16885), (52.969383, -7.141404))]
+# for pt in points_list:
+#     runRandom(pt[0], pt[1])
+
 
 # resetFile()
 # avgFile()

@@ -21,11 +21,11 @@ def getEnergy(pt1, pt2):
     energy_joules = dist_in_m*energy_per_m
     energy_MJ = energy_joules/(1000**2) # mega Joules
 
-    energy_kWh = energy_MJ*(5/8)
+    energy_kWh = energy_joules/3600
 
     voltage = 22.8 # average voltage of battery
 
-    mAh_used = energy_kWh/voltage * 100000000
+    mAh_used = energy_kWh/voltage * 100000
 
     # print("Mega Joules used:", energy_MJ)
     # print("Kilowatt-hours used:", energy_kWh)

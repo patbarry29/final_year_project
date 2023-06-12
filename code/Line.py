@@ -168,6 +168,8 @@ class Line:
         above_max = self.getMaxAlt()-max_alt
         if above_max > 0:
             above_max = 1
+            energy_mAh *= 2
+            
         avg_ang = total_ang
         if num_of_turns > 0:
             avg_ang = round(total_ang/num_of_turns, 1)
